@@ -86,3 +86,8 @@ h6::before {
     -webkit-animation: ccc 6s linear infinite;
     animation: ccc 6s linear infinite;
 }
+#postChat_button {
+    height: 65px !important;
+    width: 65px !important;
+    margin-left: 85%;
+}
