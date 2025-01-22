@@ -1,0 +1,65 @@
+/* 父容器样式 */
+#recent-posts {
+    display: flex; /* 使用弹性布局 */
+    flex-wrap: wrap; /* 允许换行 */
+    gap: 1rem; /* 子元素间距 */
+    justify-content: space-between; /* 子元素两端对齐 */
+    box-sizing: border-box; /* 确保内外边距计算准确 */
+    margin: 0 auto; /* 居中 */
+    max-width: 1200px; /* 父容器最大宽度 */
+    padding: 1rem; /* 内边距 */
+}
+
+/* 子容器样式 */
+#recent-posts > .recent-post-item {
+    flex: 0 0 calc(50% - 0.5rem); /* 每行两个，减去间距 */
+    box-sizing: border-box; /* 包括内边距和边框 */
+    background: #f8f8f8; /* 测试背景色 */
+    padding: 1rem; /* 内边距 */
+    border-radius: 8px; /* 圆角 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+}
+
+/* 图片样式 */
+#recent-posts > .recent-post-item img.post-bg {
+    width: 100%; /* 图片宽度占满父容器 */
+    height: 200px; /* 固定图片高度 */
+    object-fit: cover; /* 图片保持比例裁剪 */
+    border-radius: 8px 8px 0 0; /* 顶部圆角 */
+    margin-bottom: 1rem; /* 图片与内容的间距 */
+}
+
+/* 内容区域样式 */
+#recent-posts > .recent-post-item .recent-post-info {
+    padding: 0; /* 内容内边距 */
+}
+
+#recent-posts > .recent-post-item .recent-post-info .article-title {
+    font-size: 1.2rem; /* 标题字体大小 */
+    font-weight: bold; /* 加粗标题 */
+    color: #333; /* 标题颜色 */
+    margin-bottom: 0.5rem; /* 标题与meta的间距 */
+    text-decoration: none; /* 移除链接下划线 */
+}
+
+#recent-posts > .recent-post-item .recent-post-info .article-meta-wrap {
+    font-size: 0.9rem; /* Meta信息字体大小 */
+    color: #666; /* 字体颜色 */
+    margin-bottom: 1rem; /* 底部间距 */
+}
+
+#recent-posts > .recent-post-item .recent-post-info .content {
+    font-size: 1rem; /* 内容字体大小 */
+    line-height: 1.5; /* 行高 */
+    color: #444; /* 内容字体颜色 */
+}
+
+/* 响应式调整 - 手机屏幕适配 */
+@media screen and (max-width: 768px) {
+    #recent-posts > .recent-post-item {
+        flex: 0 0 100%; /* 单列显示 */
+    }
+    #recent-posts {
+        gap: 0.5rem; /* 减小间距 */
+    }
+}

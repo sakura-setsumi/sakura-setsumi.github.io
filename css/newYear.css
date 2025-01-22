@@ -21,7 +21,7 @@
     padding: 1rem;
     position: relative;
     border-radius: 12px;
-    background-image: url(/img/tunian3.png);
+    background-image: url(/img/shenian.png);
     background-size: cover;
     background-position: center;
 }
@@ -44,11 +44,11 @@
 }
 
 #newYear-main .day {
-    font-size: 5rem;
+    font-size: 5.5rem;
 }
 
 #newYear-main .day .unit {
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
 #newYear-main .mask {
@@ -58,4 +58,9 @@
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, .1);
+}
+
+#newYear-main .today,
+#newYear-main .title{
+    font-size: 1rem;
 }
