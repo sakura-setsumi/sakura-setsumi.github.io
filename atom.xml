@@ -6,7 +6,7 @@
   <link href="https://blog1.fengsy.top/atom.xml" rel="self"/>
   
   <link href="https://blog1.fengsy.top/"/>
-  <updated>2025-01-21T07:19:04.815Z</updated>
+  <updated>2025-03-06T02:24:48.794Z</updated>
   <id>https://blog1.fengsy.top/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OOM情况的处理</title>
+    <link href="https://blog1.fengsy.top/post/408ec80b.html"/>
+    <id>https://blog1.fengsy.top/post/408ec80b.html</id>
+    <published>2025-03-06T01:24:47.000Z</published>
+    <updated>2025-03-06T02:24:48.794Z</updated>
+    
+    <content type="html"><![CDATA[<div id="postchat_postcontent"><h3 id="inspect查看容器断开的原因"><a href="#inspect查看容器断开的原因" class="headerlink" title="inspect查看容器断开的原因"></a>inspect查看容器断开的原因</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        &quot;Id&quot;: &quot;b6c047e33880579a8143a92c83b96562aaca8cd0e5089f3d2ba0df1d820cc35b&quot;,</span><br><span class="line">        &quot;Created&quot;: &quot;2025-01-22T03:58:34.723887312Z&quot;,</span><br><span class="line">        &quot;Path&quot;: &quot;java&quot;,</span><br><span class="line">        &quot;Args&quot;: [</span><br><span class="line">            &quot;-Xms512m&quot;,</span><br><span class="line">            &quot;-Xmx2g&quot;,</span><br><span class="line">            &quot;-Xss512k&quot;,</span><br><span class="line">            &quot;-XX:MaxDirectMemorySize=512m&quot;,</span><br><span class="line">            &quot;-XX:+UseContainerSupport&quot;,</span><br><span class="line">            &quot;-jar&quot;,</span><br><span class="line">            &quot;pml-admin.jar&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;State&quot;: &#123;</span><br><span class="line">            &quot;Status&quot;: &quot;exited&quot;,</span><br><span class="line">            &quot;Running&quot;: false,</span><br><span class="line">            &quot;Paused&quot;: false,</span><br><span class="line">            &quot;Restarting&quot;: false,</span><br><span class="line">            &quot;OOMKilled&quot;: true,</span><br><span class="line">            &quot;Dead&quot;: false,</span><br><span class="line">            &quot;Pid&quot;: 0,</span><br><span class="line">            &quot;ExitCode&quot;: 137,</span><br><span class="line">            &quot;Error&quot;: &quot;&quot;,</span><br><span class="line">            &quot;StartedAt&quot;: &quot;2025-03-05T08:00:06.251204387Z&quot;,</span><br><span class="line">            &quot;FinishedAt&quot;: &quot;2025-03-05T11:07:11.059290614Z&quot;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure><p><em>ExitCode是退出码，137为内存溢出</em></p><h3 id="查看容器内存限制"><a href="#查看容器内存限制" class="headerlink" title="查看容器内存限制"></a>查看容器内存限制</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect pml | grep &quot;Memory&quot;</span><br></pre></td></tr></table></figure><p><em>如果 <code>Memory</code> 值为 <code>0</code>，说明没有内存限制。如果有值，比如 <code>2147483648</code>（即 2GB），说明容器最多只能使用 2GB 内存，可能不够。</em></p><h3 id="启用swap"><a href="#启用swap" class="headerlink" title="启用swap"></a>启用swap</h3><ul><li><p>什么是Swap？</p><p><em>Swap（交换空间）是一种 <strong>虚拟内存</strong>，当物理内存（RAM）不足时，操作系统会把不常用的内存数据 <strong>临时存放到硬盘</strong>（Swap 空间）上，以避免进程因内存不足而被杀死。</em></p></li><li><p>Swap的作用</p><ol><li>防止 OOM（内存不足）<ul><li>当物理内存不够时，系统会把一些暂时不用的数据转移到 Swap，而不是直接杀死进程（例如你的 Java 进程）。</li></ul></li><li>提升系统稳定性<ul><li>如果服务器运行多个进程，并且偶尔内存峰值较高，Swap 能起到缓冲作用，防止进程被强制终止。</li></ul></li><li>支持更大的并发<ul><li>服务器可能需要运行多个应用，物理内存有限时，Swap 允许更好地分配资源，减少应用崩溃的风险。</li></ul></li></ol></li><li><p>Swap的缺点</p><ul><li><strong>速度慢</strong>：Swap 依赖硬盘，访问速度远远慢于 RAM，使用过多会导致系统变慢（特别是 HDD）。</li><li><strong>可能影响性能</strong>：如果系统频繁使用 Swap，可能会导致 <strong>高 IO 负载</strong>，降低整体性能。</li></ul></li><li><p>&#x1F4A1; 解决方案：</p><ul><li>建议只把 Swap 作为备用，不要让 Swap 变成主要内存！</li><li>如果 Swap 使用量过高，说明物理内存不够，建议增加 RAM。</li><li><strong>对于 Java 应用，建议调整 <code>-Xmx</code> 以减少内存占用，而不是依赖 Swap。</strong></li></ul></li></ul><h4 id="创建swap（2g）"><a href="#创建swap（2g）" class="headerlink" title="创建swap（2g）"></a>创建swap（2g）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fallocate -l 2G /swapfile</span><br><span class="line">chmod 600 /swapfile</span><br><span class="line">mkswap /swapfile</span><br><span class="line">swapon /swapfile</span><br></pre></td></tr></table></figure><h4 id="确认swap是否启用"><a href="#确认swap是否启用" class="headerlink" title="确认swap是否启用"></a>确认swap是否启用</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -m</span><br></pre></td></tr></table></figure><h4 id="让-Swap-在重启后仍然生效"><a href="#让-Swap-在重启后仍然生效" class="headerlink" title="让 Swap 在重启后仍然生效"></a>让 Swap 在重启后仍然生效</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;/swapfile swap swap defaults 0 0&#x27; &gt;&gt; /etc/fstab</span><br></pre></td></tr></table></figure></div>]]></content>
+    
+    
+    <summary type="html">对服务器容器内存溢出的处理</summary>
+    
+    
+    
+    <category term="部署" scheme="https://blog1.fengsy.top/categories/%E9%83%A8%E7%BD%B2/"/>
+    
+    
+    <category term="部署" scheme="https://blog1.fengsy.top/tags/%E9%83%A8%E7%BD%B2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>deepseek</title>
+    <link href="https://blog1.fengsy.top/post/bc9a4dc7.html"/>
+    <id>https://blog1.fengsy.top/post/bc9a4dc7.html</id>
+    <published>2025-02-10T07:54:33.000Z</published>
+    <updated>2025-03-06T02:20:28.723Z</updated>
+    
+    <content type="html"><![CDATA[<div id="postchat_postcontent"></div>]]></content>
+    
+    
+    <summary type="html">centos服务器本地部署deepseek</summary>
+    
+    
+    
+    <category term="java并发" scheme="https://blog1.fengsy.top/categories/java%E5%B9%B6%E5%8F%91/"/>
+    
+    
+    <category term="deepseek" scheme="https://blog1.fengsy.top/tags/deepseek/"/>
+    
+  </entry>
   
   <entry>
     <title>安装nextcloud</title>
@@ -128,7 +170,7 @@
     <link href="https://blog1.fengsy.top/post/97c26f6a.html"/>
     <id>https://blog1.fengsy.top/post/97c26f6a.html</id>
     <published>2024-12-05T02:02:11.000Z</published>
-    <updated>2025-01-17T08:43:54.154Z</updated>
+    <updated>2025-02-10T07:55:55.488Z</updated>
     
     <content type="html"><![CDATA[<div id="postchat_postcontent"><h2 id="行锁的实现"><a href="#行锁的实现" class="headerlink" title="行锁的实现"></a>行锁的实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先查询设备并加锁</span></span><br><span class="line"><span class="type">PmlDevice</span> <span class="variable">device</span> <span class="operator">=</span> pmlDeviceMapper.selectByIdForUpdate(pmlDeviceDto.getDeviceNo());</span><br><span class="line"><span class="keyword">if</span> (device == <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 处理设备不存在的情况</span></span><br><span class="line">    <span class="keyword">return</span> AjaxResult.error(<span class="string">&quot;第&quot;</span>+a+<span class="string">&quot;行设备不存在,请确认后重新导入!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 更新设备信息  </span></span><br><span class="line">device.setDealerUserId(pmlDeviceDto.getDealerUserId());</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=<span class="string">&quot;selectByIdForUpdate&quot;</span> resultType=<span class="string">&quot;com.pml.domain.PmlDevice&quot;</span>&gt;</span><br><span class="line">    SELECT * FROM pml_device <span class="type">WHERE</span> <span class="variable">device_no</span> <span class="operator">=</span> #&#123;deviceNo&#125; FOR UPDATE</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure><p>​      <em>添加时机：在select … for update 语句时给查询到的记录添加一个排他锁（也称为行锁或写锁），以防止其他事务对同一行数据进行修改</em></p><p>​      <em>释放时机：行锁通常在当前事务结束时自动释放。事务可以通过以下几种方式结束：<br>提交事务：如果事务成功完成所有操作并且调用了提交方法（例如 transactionManager.commit()），行锁会被释放。<br>回滚事务：如果事务过程中发生了错误并且调用了回滚方法（例如 transactionManager.rollback()），行锁也会被释放。</em></p><p>​      <em>在Java中，如果你使用的是Spring框架，事务管理通常是通过注解（如 @Transactional）来实现的。在这种情况下，事务的边界由方法的开始和结束决定。因此，行锁会在方法返回时（无论是正常返回还是抛出异常）被释放。</em></p><hr><h2 id="表锁的实现"><a href="#表锁的实现" class="headerlink" title="表锁的实现"></a>表锁的实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BEGIN;</span><br><span class="line">LOCK TABLES devices WRITE;</span><br><span class="line">-- 执行更新操作</span><br><span class="line">UPDATE devices <span class="type">SET</span> <span class="variable">dealer_user_id</span> <span class="operator">=</span> <span class="string">&#x27;new_user_id&#x27;</span> <span class="type">WHERE</span> <span class="variable">device_no</span> <span class="operator">=</span> <span class="string">&#x27;device_no&#x27;</span>;</span><br><span class="line">-- 释放表锁</span><br><span class="line">UNLOCK TABLES;</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure><p><em>表锁会显著降低并发性能，因为它们会阻止其他事务对表的访问</em></p><p><em>不当使用表锁可能导致死锁，特别是在复杂的事务环境中</em></p><p><em>确保在事务中正确地添加和释放表锁，以避免锁泄漏</em></p><p><em>如果你需要在应用程序中实现表锁，建议根据具体的数据库系统选择合适的语法和方法。同时，尽量减少表锁的使用，转而使用更细粒度的行锁来提高并发性能。</em></p></div>]]></content>
     
