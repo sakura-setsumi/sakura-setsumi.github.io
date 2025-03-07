@@ -65,74 +65,33 @@
     font-size: 1rem;
 }
 
-/*!* 新增圣诞礼物样式 *!*/
+.recent-post-items > .recent-post-item {
+    flex-direction: column !important;
+}
+
+.recent-post-items > .recent-post-item .post_cover {
+    width: 100% !important;
+    height: 200px !important;
+    overflow: hidden !important;
+}
+.layout{
+    width: 60% !important;
+}
+.recent-post-items > .recent-post-item .recent-post-info {
+    height: 100px !important;
+}
+#recent-posts .recent-post-items {
+    height: 330px !important;
+}
+#recent-posts .recent-post-item > .recent-post-info {
+    padding: 1rem !important;
+    display: inline-block;
+}
+#recent-posts .recent-post-item >.recent-post-info > .content {
+    display: none;
+}
 /*.recent-post-item {*/
-/*    position: relative;*/
-/*    background: #c41e3a !important; !* 圣诞红 *!*/
-/*    border-radius: 8px;*/
-/*    padding: 20px;*/
-/*    transform-style: preserve-3d;*/
-/*    box-shadow: 0 10px 20px rgba(0,0,0,0.2);*/
-/*}*/
-
-/*!* 礼物丝带 *!*/
-/*.recent-post-item::before,*/
-/*.recent-post-item::after {*/
-/*    content: '';*/
-/*    position: absolute;*/
-/*    background: #228B22; !* 圣诞绿 *!*/
-/*}*/
-
-/*!* 横向丝带 *!*/
-/*.recent-post-item::before {*/
-/*    top: 40%;*/
-/*    left: 0;*/
 /*    width: 100%;*/
-/*    height: 12px;*/
-/*    box-shadow: 0 2px 4px rgba(0,0,0,0.2);*/
 /*}*/
 
-/*!* 纵向丝带 *!*/
-/*.recent-post-item::after {*/
-/*    left: 50%;*/
-/*    top: 0;*/
-/*    height: 100%;*/
-/*    width: 12px;*/
-/*    transform: translateX(-50%);*/
-/*}*/
 
-/*!* 蝴蝶结 *!*/
-/*.recent-post-item::before {*/
-/*    background:*/
-/*            linear-gradient(45deg,*/
-/*            transparent 25%,*/
-/*            #ffd700 25%,*/
-/*            #ffd700 75%,*/
-/*            transparent 75%),*/
-/*            linear-gradient(-45deg,*/
-/*            transparent 25%,*/
-/*            #ffd700 25%,*/
-/*            #ffd700 75%,*/
-/*            transparent 75%);*/
-/*    background-size: 20px 20px;*/
-/*    background-position: 0 0;*/
-/*    animation: ribbon 2s linear infinite;*/
-/*}*/
-
-/*!* 礼物盒盖子 *!*/
-/*.recent-post-item {*/
-/*    border-top: 30px solid #b01734;*/
-/*    border-radius: 8px 8px 0 0;*/
-/*}*/
-
-/*!* 动画效果 *!*/
-/*@keyframes ribbon {*/
-/*    0% { background-position: 0 0; }*/
-/*    100% { background-position: 20px 20px; }*/
-/*}*/
-
-/*!* 悬停效果 *!*/
-/*.recent-post-item:hover {*/
-/*    transform: rotate(-2deg) scale(1.05);*/
-/*    transition: all 0.3s ease;*/
-/*}*/
