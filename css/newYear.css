@@ -67,6 +67,7 @@
 
 .recent-post-items > .recent-post-item {
     flex-direction: column !important;
+    margin-bottom: 5px !important;
 }
 
 .recent-post-items > .recent-post-item .post_cover {
