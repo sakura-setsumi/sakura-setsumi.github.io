@@ -1,0 +1,581 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>安装nextcloud | 竹兰小筑</title><meta name="author" content="南枝向暖"><meta name="copyright" content="南枝向暖"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="服务器安装nextcloud的步骤">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装nextcloud">
+<meta property="og:url" content="https://blog1.fengsy.top/post/db544ad0.html">
+<meta property="og:site_name" content="竹兰小筑">
+<meta property="og:description" content="服务器安装nextcloud的步骤">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog1.fengsy.top/img/nextcloud.png">
+<meta property="article:published_time" content="2024-12-18T06:48:54.000Z">
+<meta property="article:modified_time" content="2025-01-21T07:19:04.815Z">
+<meta property="article:author" content="南枝向暖">
+<meta property="article:tag" content="部署">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog1.fengsy.top/img/nextcloud.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "安装nextcloud",
+  "url": "https://blog1.fengsy.top/post/db544ad0.html",
+  "image": "https://blog1.fengsy.top/img/nextcloud.png",
+  "datePublished": "2024-12-18T06:48:54.000Z",
+  "dateModified": "2025-01-21T07:19:04.815Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "南枝向暖",
+      "url": "https://blog1.fengsy.top/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/bamboo.png"><link rel="canonical" href="https://blog1.fengsy.top/post/db544ad0.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"top-center"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '安装nextcloud',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/double-row.css"><link rel="stylesheet" href="/css/mouse.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="/css/newYear.css"><link rel="stylesheet" href="/css/transpancy.css"><link rel="stylesheet" href="/css/icon.css"><link rel="stylesheet" href="/css/photo-wall.css"><link rel="stylesheet" href="https://ai.tianli0.top/static/public/postChatUser_summary.min.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css">
+<link rel="stylesheet" href="/css/recommend.css?v=1.1.2.css">
+<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css">
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="竹兰小筑" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/img/street2.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/"><i class="fa-fw fa fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/photo-wall/"><i class="fa-fw fas fa-camera-retro"></i><span> 照片墙</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/nextcloud.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">竹兰小筑</span></a><a class="nav-page-title" href="/"><span class="site-name">安装nextcloud</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/"><i class="fa-fw fa fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/photo-wall/"><i class="fa-fw fas fa-camera-retro"></i><span> 照片墙</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">安装nextcloud</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-18T06:48:54.000Z" title="发表于 2024-12-18 14:48:54">2024-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-21T07:19:04.815Z" title="更新于 2025-01-21 15:19:04">2025-01-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%83%A8%E7%BD%B2/">部署</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url(/img/nextcloud.png);"></div><article class="container post-content" id="article-container"><div id="postchat_postcontent"><h2 id="nextcloud介绍"><a href="#nextcloud介绍" class="headerlink" title="nextcloud介绍"></a>nextcloud介绍</h2><p><em>Nextcloud是一款开源免费的私有云存储网盘项目，可以让你快速便捷地搭建一套属于自己或团队的云同步网盘，从而实现跨平台跨设备文件同步、共享、版本控制、团队协作等功能。Nextcloud是一个网盘式文件管理系统，多用户权限管理，多客户端，使用简单。</em>  </p>
+<p><em>Nextcloud是owncloud的一个分支，由原创始人团队维护，是在owncloud被别的公司收购后，由创始人团队创立的新分支。就像 mysql和mariadb。</em>  </p>
+<p><em>Nextcloud完全开源，功能强大，能够自由更改主题，无限制增加用户，有一个完善的应用中心（在线office办公，pdf在线浏览，图片缩略图浏览等功能）</em></p>
+<h2 id="如何安装nextcloud"><a href="#如何安装nextcloud" class="headerlink" title="如何安装nextcloud"></a>如何安装nextcloud</h2><h3 id="安装php8-1"><a href="#安装php8-1" class="headerlink" title="安装php8.1"></a>安装php8.1</h3><h4 id="检查旧版的php版本"><a href="#检查旧版的php版本" class="headerlink" title="检查旧版的php版本"></a>检查旧版的php版本</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">检查当前php版本或者 php -m 检查当前php扩展</span></span><br><span class="line">php -v #检查当前的php版本</span><br><span class="line">php -m #检查php扩展</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="卸载所有已安装的php"><a href="#卸载所有已安装的php" class="headerlink" title="卸载所有已安装的php"></a>卸载所有已安装的php</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove -y php*</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="添加remi源（可能需要提前安装epel-release）"><a href="#添加remi源（可能需要提前安装epel-release）" class="headerlink" title="添加remi源（可能需要提前安装epel-release）"></a>添加remi源（可能需要提前安装epel-release）</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm</span><br><span class="line">rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span><br><span class="line">rpm -Uvh https://rpms.remirepo.net/enterprise/remi-release-7.rpm</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="单独启动php81的源（需要提前安装yum-utils以确保yum-config-manager命令顺利运行）"><a href="#单独启动php81的源（需要提前安装yum-utils以确保yum-config-manager命令顺利运行）" class="headerlink" title="单独启动php81的源（需要提前安装yum-utils以确保yum-config-manager命令顺利运行）"></a>单独启动php81的源（需要提前安装yum-utils以确保yum-config-manager命令顺利运行）</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --disable 'remi-php*'</span><br><span class="line">yum-config-manager --enable remi-php81</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>若出现 -bash:yum-config-manager:未找到命令</em><br> <em>是因为没有安装过yum-utils</em><br> <em>解决方法：</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="安装php及其扩展"><a href="#安装php及其扩展" class="headerlink" title="安装php及其扩展"></a>安装php及其扩展</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y  php php-bcmath php-cli php-common php-devel php-fpm php-gd php-intl php-ldap php-mbstring php-mysqlnd php-odbc php-pdo php-pear php-pecl-xmlrpc php-pecl-zip php-process php-snmp php-soap php-sodium php-xml</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>在安装的过程中要仔细检查每一个php扩展是否安装成功，如果有安装不成功的扩展需要及时重装。如果没有及时重装可能会导致服务器内部错误。</em><br> <em>如果php-mysqlnd提示安装失败，换个源试试，php-mysqlnd没装上web安装必失败。</em><br><em>安装完成，查看php版本</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -v</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>php命令</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl status php-fpm    #查看php状态</span><br><span class="line">systemctl start php-fpm     #启动php</span><br><span class="line">systemctl stop php-fpm      #停止php</span><br><span class="line">systemctl restart php-fpm   #重启php</span><br><span class="line">systemctl enable php-fpm    #配置php自启动</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="apache服务器安装"><a href="#apache服务器安装" class="headerlink" title="apache服务器安装"></a>apache服务器安装</h3><h4 id="检查是否有旧版本的apache（也可以不检查直接装）"><a href="#检查是否有旧版本的apache（也可以不检查直接装）" class="headerlink" title="检查是否有旧版本的apache（也可以不检查直接装）"></a>检查是否有旧版本的apache（也可以不检查直接装）</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep httpd</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p> <em>会返回一个版本号</em></p>
+<h4 id="卸载旧版本，安装新版本"><a href="#卸载旧版本，安装新版本" class="headerlink" title="卸载旧版本，安装新版本"></a>卸载旧版本，安装新版本</h4><p> <em>卸载旧版本</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove httpd*</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>安装新版本</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install httpd</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="安装完成后检查apache状态"><a href="#安装完成后检查apache状态" class="headerlink" title="安装完成后检查apache状态"></a>安装完成后检查apache状态</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep httpd    #检查apache软件版本</span><br><span class="line">ps -ef | grep apache    #检查apache进程</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="apache服务指令"><a href="#apache服务指令" class="headerlink" title="apache服务指令"></a>apache服务指令</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl status httpd      #查看apache状态</span><br><span class="line">systemctl start httpd       #启动apache</span><br><span class="line">systemctl stop httpd        #停止apache</span><br><span class="line">systemctl restart httpd     #重启apache</span><br><span class="line">system enable httpd         #开机自启apache</span><br></pre></td></tr></tbody></table></figure>
+
+<p><em>如果本地访问，就已经大功告成了，如果在别的主机上访问，就需要开启CentOS 7的80端口</em></p>
+<h4 id="开放CentOS-7的80端口，配置防火墙相关命令"><a href="#开放CentOS-7的80端口，配置防火墙相关命令" class="headerlink" title="开放CentOS 7的80端口，配置防火墙相关命令"></a>开放CentOS 7的80端口，配置防火墙相关命令</h4><p><em>如果嫌麻烦可以直接放行所有端口，但是这样做不安全</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>也可以只放行80端口，这样是比较保守的选择</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent </span><br><span class="line">firewall-cmd --reload           #重新加载让刚才的命令生效</span><br><span class="line">firewall-cmd --list-ports       #看一下生效了没</span><br></pre></td></tr></tbody></table></figure>
+
+<p><em>到这里apache就算安装完成了，接下来可以访问一下ip看看效果</em></p>
+<p><em>如果出现大大的“testing 123…”就是成功了</em></p>
+<h3 id="安装MySQL数据库"><a href="#安装MySQL数据库" class="headerlink" title="安装MySQL数据库"></a>安装MySQL数据库</h3><h4 id="卸载MariaDB"><a href="#卸载MariaDB" class="headerlink" title="卸载MariaDB"></a>卸载MariaDB</h4><p><em>由于本文用到的环境是CentOS 7，所以系统中有自带的MariaDB数据库，在这里先将MariaDB卸载，然后安装 Mysql</em></p>
+<p><em>首先，检查是否安装了MariaDB</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep -i mariadb</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>如果已经安装了MariaDB，进行卸载</p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e --nodeps mariadb-libs-5.5.68-1.el7.x86_64</span><br></pre></td></tr></tbody></table></figure>
+
+<p><em>这里的MariaDB版本是我本地的版本，如果不知道自己的数据库版本可以按TAB键自动补全</em></p>
+<h4 id="下载MySQL仓库并安装"><a href="#下载MySQL仓库并安装" class="headerlink" title="下载MySQL仓库并安装"></a>下载MySQL仓库并安装</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo.mysql.com//mysql80-community-release-el7-3.noarch.rpm</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>若提示wget未找到命令，先安装wget</em></p>
+ <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install wget</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>安装好后，安装mysql仓库</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mysql80-community-release-el7-3.noarch.rpm</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>运行下面的命令安装GPG，不安装的话用yum安装mysql会报错</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="安装MySQL数据库-1"><a href="#安装MySQL数据库-1" class="headerlink" title="安装MySQL数据库"></a>安装MySQL数据库</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mysql-community-servic</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>开启MySQL数据库，检查数据库状态</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld      #启动MySQL</span><br><span class="line">systemctl status mysqld     #查看MySQL状态（MySQL经常抽风，这条命令很常用）</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="查看MySQL的默认密码，登录并修改默认密码"><a href="#查看MySQL的默认密码，登录并修改默认密码" class="headerlink" title="查看MySQL的默认密码，登录并修改默认密码"></a>查看MySQL的默认密码，登录并修改默认密码</h4><p><em>查看默认密码</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/mysqld.log |grep password</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>因为是首次登录MySQL，所以需要先查看MySQL默认的root密码，然后用默认密码登录root账户，在首次登录root账户后会被MySQL强制要求修改密码。</em><br> <em>登录MySQL</em></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>回车之后会弹出“password:”输入默认密码登录即可</em><br><em>修改默认密码</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER 'root'@'localhost' IDENTIFIED BY 'nextcloud@admin2023';      #注意分号</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p> <em>这个密码其实是不符合MySQL密码规则的，MySQL要求必须有大小写和特殊符号</em></p>
+<p> <em>如果你想设置一个弱密码，可以用这条代码查看密码策略</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW variables LIKE 'validatej_password%';</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p> <em>查看过后可以修改成我们想要设置的样子</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set global validate_password.policy=0;</span><br><span class="line">set global validate_password.length=4;</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p> <em>这样设置过后我们的密码就变成最少4位并且没有限制了</em></p>
+<h3 id="配置数据库、表及用户权限"><a href="#配置数据库、表及用户权限" class="headerlink" title="配置数据库、表及用户权限"></a>配置数据库、表及用户权限</h3><h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><p><em>创建一个名为nextclouddate的数据库，你也可以起一个别的名字。但是一定要记住，在安装的时候要用到！！！切记！！！</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE nextclouddate; </span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="进入刚创建的数据库"><a href="#进入刚创建的数据库" class="headerlink" title="进入刚创建的数据库"></a>进入刚创建的数据库</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use nextclouddate;</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE user 'username'@'localhost' identified by 'Password@2023'</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>其中‘username’表示用户名，‘Password@2023’表示密码。‘localhost’表示只能本地访问，可以根据需求修改</em><br> <em>在安装nextcloud时同样需要用到现在创建的用户，所以一定记住设置的用户名和密码！</em></p>
+<h4 id="为用户授权"><a href="#为用户授权" class="headerlink" title="为用户授权"></a>为用户授权</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON nextclouddate.* TO 'username'@'localhost';</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p><em>这一步同样至关重要，是给刚创建的用户授予所有权限，如果没授予成功一定检查哪里出了问题。</em></p>
+<p> <em>如果创建的用户没有权限的话，web安装时会出现无法连接MySQL报错  如果出现上述错误，可以参考nextcloud官网上的解决方法，链接如下：nextcloud官方论坛解决方法</em></p>
+<h3 id="nextcloud安装与配置"><a href="#nextcloud安装与配置" class="headerlink" title="nextcloud安装与配置"></a>nextcloud安装与配置</h3><h4 id="获取nextcloud安装包"><a href="#获取nextcloud安装包" class="headerlink" title="获取nextcloud安装包"></a>获取nextcloud安装包</h4><p><em>使用wget下载nextcloud最新版安装包</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.nextcloud.com/server/releases/nextcloud-24.0.5.zip</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h4 id="解压并转移到对应文件夹下"><a href="#解压并转移到对应文件夹下" class="headerlink" title="解压并转移到对应文件夹下"></a>解压并转移到对应文件夹下</h4><p> <em>网上看了很多安装教程并没有写nextcloud的文件要放在哪个路径下，对于小白来讲很不友好，所以这里说明一下路径</em></p>
+<p> <em>事实上nextcloud要解压到var/www/html这个文件夹下，这里我们在根目录下解压，然后把文件转移到这个位置</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install -y unzip        #安装unzip用来解压文件</span><br><span class="line">unzip nextcloud-24.0.5.zip             #解压上面下载的zip文件</span><br><span class="line">cd /root/nextcloud          #进入解压后的文件夹</span><br><span class="line">scp -r * /var/www/html      #把文件夹下的全部内容转移到目标文件夹下</span><br></pre></td></tr></tbody></table></figure>
+
+<p> <em>老规矩，如果有未找到命令的报错，就安装一下</em><br> <em>安装命令 yum -y install ‘名称’</em></p>
+<h4 id="给nextcloud文件权限"><a href="#给nextcloud文件权限" class="headerlink" title="给nextcloud文件权限"></a>给nextcloud文件权限</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R apache:apache /var/www/html        #把这一文件下的子文件、子目录的所有者设为apache用户</span><br><span class="line">chmod -R 775 /var/www/html                  #赋予775权限</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p><em>这两步骤如果不操作的话在web安装的时候会出现服务器内部错误，如果安装的时候发现有类似的情况要检查一下权限给没给</em></p>
+<p><em>检查权限是否正确的方法</em></p>
+<p> <em>进入 /var/www/html目录下</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<p><em>这样就可以看到文件的权限以及是否为apache用户</em></p>
+<h4 id="关闭ESLinux"><a href="#关闭ESLinux" class="headerlink" title="关闭ESLinux"></a>关闭ESLinux</h4><p><em>还是那句话，目前大多数的教程都是基于docker安装nextcloud，在为数不多不用docker部署的文章中，99%都没有提到要禁用ESLinux，但如果不禁用他的话就会导致网页无法正常显示</em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y vim</span><br><span class="line">vim /etc/selinux/config     #编辑selinux配置文件</span><br></pre></td></tr></tbody></table></figure>
+
+<p><em>进去之后按i编辑，然后找到SELINUX的那一行</em><br><em>SELINUX=disbabled           #把等号删掉，改为disabled</em></p>
+<h3 id="进入nextcloud前端配置页面"><a href="#进入nextcloud前端配置页面" class="headerlink" title="进入nextcloud前端配置页面"></a>进入nextcloud前端配置页面</h3><p><em>根据本文的配置，对应输入就可以安装成功了！</em></p>
+<p><em>安装成功！</em></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog1.fengsy.top">南枝向暖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog1.fengsy.top/post/db544ad0.html">https://blog1.fengsy.top/post/db544ad0.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog1.fengsy.top" target="_blank">竹兰小筑</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%83%A8%E7%BD%B2/">部署</a></div><div class="post-share"><div class="social-share" data-image="/img/nextcloud.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer=""></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/fac5c62e.html" title="如何其他电脑上继续编写博客"><img class="cover" src="/img/lock.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">如何其他电脑上继续编写博客</div></div><div class="info-2"><div class="info-item-1">  ...</div></div></div></a><a class="pagination-related  no-desc" href="/post/bc9a4dc7.html" title="deepseek"><img class="cover" src="/img/deepseek.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">deepseek</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/408ec80b.html" title="维护若依项目"><img class="cover" src="/img/ruoyi-manage.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-10</div><div class="info-item-2">维护若依项目</div></div><div class="info-2"><div class="info-item-1">更新容器步骤进入容器查看jar包的位置 12docker exec -it &lt;container&gt; /bin/bashls  可以将jar包同步到容器内的文件 12#cd到jar包相同目录#docker cp ruoyi-admin.jar &lt;container&gt;:/app/ruoyi-admin.jar  进程占用的处理安装isof 1sudo yum install lsof  查找是什么进程占用了端口,并获取pid 1lsof -i :&lt;port&gt;  强制杀死进程 1sudo kill -9 &lt;PID&gt;  nginx开机启动设置查看nginx是否是开机启动 123sudo systemctl is-enabled nginx- disabled是未开机启动- disabled是已经设置了开机启动  设置开机启动 1sudo systemctl enable nginx  给docker设置开机启动如果容器已经创建，先删除容器 1docker rm -f...</div></div></div></a><a class="pagination-related" href="/post/b4780c00.html" title="若依项目的首次部署"><img class="cover" src="/img/ruoyi.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-04</div><div class="info-item-2">若依项目的首次部署</div></div><div class="info-2"><div class="info-item-1">安装mysql检查是否安装过mysql 1rpm -qa | grep mysql  如果你系统有安装，那可以选择进行卸载 12rpm -e mysql　# 普通删除模式rpm -e --nodeps mysql　　# 强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除  安装mysql 1234567sudo yum install wget# 使用 wget 下载 MySQL 仓库的 RPM 包wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm# 安装下载的 RPM 包rpm -ivh mysql-community-release-el7-5.noarch.rpmyum updateyum install mysql-server  权限设置 1chown -R mysql:mysql /var/lib/mysql/  创建并切换到 mysql 用户 1234// 如果已经创建跳过前两步sudo useradd mysql sudo passwd...</div></div></div></a></div></div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">南枝向暖</div><div class="author-info-description">归途也还可爱</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/sakura-setsumi"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><div class="social-button"> <a class="button--animated" href="https://cloudisk.fengsy.top/" rel="external nofollow noreferrer" target="_blank">👉 我的nextcloud 👈</a> <a class="button--animated" href="https://memes.tw/wtf?tag=%E7%84%A6%E6%85%AE" rel="external nofollow noreferrer" target="_blank">👉 焦虑迷因 👈</a> </div></div></div><div class="card-widget" id="newYear"><div class="item-headline"><i></i><span></span></div><div class="item-content"><div id="newYear-main"><div class="mask"></div> <p class="title"></p> <div class="newYear-time"></div> <p class="today" style="text-align: right;"></p> </div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#nextcloud%E4%BB%8B%E7%BB%8D"><span class="toc-text">nextcloud介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85nextcloud"><span class="toc-text">如何安装nextcloud</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85php8-1"><span class="toc-text">安装php8.1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E6%97%A7%E7%89%88%E7%9A%84php%E7%89%88%E6%9C%AC"><span class="toc-text">检查旧版的php版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD%E6%89%80%E6%9C%89%E5%B7%B2%E5%AE%89%E8%A3%85%E7%9A%84php"><span class="toc-text">卸载所有已安装的php</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0remi%E6%BA%90%EF%BC%88%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E6%8F%90%E5%89%8D%E5%AE%89%E8%A3%85epel-release%EF%BC%89"><span class="toc-text">添加remi源（可能需要提前安装epel-release）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%8B%AC%E5%90%AF%E5%8A%A8php81%E7%9A%84%E6%BA%90%EF%BC%88%E9%9C%80%E8%A6%81%E6%8F%90%E5%89%8D%E5%AE%89%E8%A3%85yum-utils%E4%BB%A5%E7%A1%AE%E4%BF%9Dyum-config-manager%E5%91%BD%E4%BB%A4%E9%A1%BA%E5%88%A9%E8%BF%90%E8%A1%8C%EF%BC%89"><span class="toc-text">单独启动php81的源（需要提前安装yum-utils以确保yum-config-manager命令顺利运行）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85php%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95"><span class="toc-text">安装php及其扩展</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#apache%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85"><span class="toc-text">apache服务器安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E6%9C%89%E6%97%A7%E7%89%88%E6%9C%AC%E7%9A%84apache%EF%BC%88%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%B8%8D%E6%A3%80%E6%9F%A5%E7%9B%B4%E6%8E%A5%E8%A3%85%EF%BC%89"><span class="toc-text">检查是否有旧版本的apache（也可以不检查直接装）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD%E6%97%A7%E7%89%88%E6%9C%AC%EF%BC%8C%E5%AE%89%E8%A3%85%E6%96%B0%E7%89%88%E6%9C%AC"><span class="toc-text">卸载旧版本，安装新版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%E6%A3%80%E6%9F%A5apache%E7%8A%B6%E6%80%81"><span class="toc-text">安装完成后检查apache状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#apache%E6%9C%8D%E5%8A%A1%E6%8C%87%E4%BB%A4"><span class="toc-text">apache服务指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E6%94%BECentOS-7%E7%9A%8480%E7%AB%AF%E5%8F%A3%EF%BC%8C%E9%85%8D%E7%BD%AE%E9%98%B2%E7%81%AB%E5%A2%99%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-text">开放CentOS 7的80端口，配置防火墙相关命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85MySQL%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">安装MySQL数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BDMariaDB"><span class="toc-text">卸载MariaDB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDMySQL%E4%BB%93%E5%BA%93%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="toc-text">下载MySQL仓库并安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85MySQL%E6%95%B0%E6%8D%AE%E5%BA%93-1"><span class="toc-text">安装MySQL数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BMySQL%E7%9A%84%E9%BB%98%E8%AE%A4%E5%AF%86%E7%A0%81%EF%BC%8C%E7%99%BB%E5%BD%95%E5%B9%B6%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E5%AF%86%E7%A0%81"><span class="toc-text">查看MySQL的默认密码，登录并修改默认密码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81%E8%A1%A8%E5%8F%8A%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90"><span class="toc-text">配置数据库、表及用户权限</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E5%88%9A%E5%88%9B%E5%BB%BA%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">进入刚创建的数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="toc-text">创建用户</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E7%94%A8%E6%88%B7%E6%8E%88%E6%9D%83"><span class="toc-text">为用户授权</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nextcloud%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="toc-text">nextcloud安装与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96nextcloud%E5%AE%89%E8%A3%85%E5%8C%85"><span class="toc-text">获取nextcloud安装包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8B%E5%B9%B6%E8%BD%AC%E7%A7%BB%E5%88%B0%E5%AF%B9%E5%BA%94%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B"><span class="toc-text">解压并转移到对应文件夹下</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%99nextcloud%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90"><span class="toc-text">给nextcloud文件权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%ADESLinux"><span class="toc-text">关闭ESLinux</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5nextcloud%E5%89%8D%E7%AB%AF%E9%85%8D%E7%BD%AE%E9%A1%B5%E9%9D%A2"><span class="toc-text">进入nextcloud前端配置页面</span></a></li></ol></li></ol></div></div><div class="card-widget card-weibo"><div class="card-content"><div class="item-headline"><i class="fab fa-weibo"></i><span>微博热搜</span></div><div id="weibo-container" style="width: 100%; height: 300px;font-size: 95%;"></div></div></div><script defer="defer" data-pjax="data-pjax" src="https://npm.elemecdn.com/eurkon-cdn/hexo/js/card_weibo.js"></script><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/17bde61f.html" title="upload"><img src="/img/s3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="upload"></a><div class="content"><a class="title" href="/post/17bde61f.html" title="upload">upload</a><time datetime="2025-03-07T08:01:58.000Z" title="发表于 2025-03-07 16:01:58">2025-03-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/408ec80b.html" title="OOM情况的处理"><img src="/img/docker.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OOM情况的处理"></a><div class="content"><a class="title" href="/post/408ec80b.html" title="OOM情况的处理">OOM情况的处理</a><time datetime="2025-03-06T01:24:47.000Z" title="发表于 2025-03-06 09:24:47">2025-03-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/bc9a4dc7.html" title="deepseek"><img src="/img/deepseek.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="deepseek"></a><div class="content"><a class="title" href="/post/bc9a4dc7.html" title="deepseek">deepseek</a><time datetime="2025-02-10T07:54:33.000Z" title="发表于 2025-02-10 15:54:33">2025-02-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/db544ad0.html" title="安装nextcloud"><img src="/img/nextcloud.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="安装nextcloud"></a><div class="content"><a class="title" href="/post/db544ad0.html" title="安装nextcloud">安装nextcloud</a><time datetime="2024-12-18T06:48:54.000Z" title="发表于 2024-12-18 14:48:54">2024-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/fac5c62e.html" title="如何其他电脑上继续编写博客"><img src="/img/lock.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="如何其他电脑上继续编写博客"></a><div class="content"><a class="title" href="/post/fac5c62e.html" title="如何其他电脑上继续编写博客">如何其他电脑上继续编写博客</a><time datetime="2024-12-13T03:01:56.000Z" title="发表于 2024-12-13 11:01:56">2024-12-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">©2019 - 2025 By 南枝向暖</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">簡</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const initValine = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyValine = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const valineConfig = {
+      el: '#vcomment',
+      appId: 'ckODCzg3Z9JzIRvWuTWX5sBs-gzGzoHsz',
+      appKey: 'f5BtlnJFYPUa5C8WnWG8fn6t',
+      avatar: '',
+      serverURLs: '',
+      emojiMaps: "",
+      visitor: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || window.location.pathname
+    }
+
+    new Valine(valineConfig)
+  }
+
+  const loadValine = async (el, path) => {
+    if (typeof Valine === 'function') {
+      initValine(el, path)
+    } else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Valine' === 'Valine'
+      ? window.shuoshuoComment = { loadComment: loadValine }
+      : window.loadOtherComment = loadValine
+    return
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><div><canvas id="snow" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;pointer-events:none"></canvas></div><script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script><script async="" type="text/javascript" src="https://cdn.jsdelivr.net/gh/Candinya/Kratos-Rebirth@latest/source/js/snow.min.js"></script><script>let tianliGPT_postSelector = '\#post \#article-container';let tianliGPT_key = 'cb68ca2a60e7baca40b04b5c0539e43122f59da5';</script><script src="https://chatthing.ai/chat-widget.js" type="text/javascript" id="dfcb6145-f2bc-42fe-b33a-ad5569e6e440" async="" defer=""></script><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" type="application/javascript"></script><script src="https://cdn.wpon.cn/2022-sucai/Gold-ingot.js"></script><script src="/js/newYear.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
+  <script data-pjax="" src="/js/hexo_githubcalendar.js"></script>
+  <script data-pjax="">
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://githubcalendarapi.shiguang666.eu.org/api?user=sakura-setsumi";
+            var git_color =['#ebedf0', '#a2f7af', '#6ce480', '#54ad63', '#469252', '#31753c', '#1f5f2a', '#13531f', '#084111', '#032b09', '#000000'];
+            var git_user ="sakura-setsumi";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log("已挂载hexo-github-calendar https://github.com/Barry-Flynn/hexo-github-calendar");
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style><script data-pjax="">function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script>
+      <script data-pjax="">
+        if (typeof window.recommend === 'undefined') {
+          window.recommend = {
+            hexo_butterfly_recommend_init: function() {
+              const $recommend = document.querySelector('#recommend');
+              if($recommend) return;
+              document.documentElement.style.setProperty('--recommend-main', '#409eff');
+              document.documentElement.style.setProperty('--recommend-deep', '#0075ffdd');
+              const hexo_butterfly_recommend_elist = 'null'.split(',');
+              var hexo_butterfly_recommend_cpage = location.pathname;
+              const hexo_butterfly_recommend_epage = '/';
+              var hexo_butterfly_recommend_flag = 0;
+        
+              for (var i = 0; i < hexo_butterfly_recommend_elist.length; i++) {
+                if (hexo_butterfly_recommend_cpage.includes(hexo_butterfly_recommend_elist[i])) {
+                  hexo_butterfly_recommend_flag++;
+                }
+              }
+              if ((hexo_butterfly_recommend_epage === 'all') && (hexo_butterfly_recommend_flag === 0)) {
+                window.recommend.hexo_butterfly_recommend_injector_config();
+              } else if (hexo_butterfly_recommend_epage === hexo_butterfly_recommend_cpage) {
+                window.recommend.hexo_butterfly_recommend_injector_config();
+              }
+            },
+            hexo_butterfly_recommend_injector_config: function() {
+              var parent_div_git = document.getElementById('content-inner');
+              var item_html = '<div class="recommend-left" id="recommend"><div id="recommend-content" onmousewheel="recommend.postScroll(this)"><div class="recommend-wrapper" id="recommend-banner"><div id="recommend-banner-wrapper"><div class="recommend-banner-title-wrapper"><div class="recommend-banner-title">无限热爱</div><div class="recommend-banner-title">生活与技术</div><div class="recommend-banner-title">FENGSY.TOP</div></div><div class="recommend-tags-all"><div class="recommend-tags-wrapper"><div class="recommend-tags-line"><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #e9572b"><i class="fa-brands fa-html5" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #ca6496"><i class="fa-brands fa-sass" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #f7cb4f"><i class="fa-brands fa-js" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #bd0102"><i class="fa-brands fa-angular" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #df5b40"><i class="fa-brands fa-git-alt" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #e9572b"><i class="fa-brands fa-html5" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #ca6496"><i class="fa-brands fa-sass" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #f7cb4f"><i class="fa-brands fa-js" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #bd0102"><i class="fa-brands fa-angular" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #df5b40"><i class="fa-brands fa-git-alt" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #e9572b"><i class="fa-brands fa-html5" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #ca6496"><i class="fa-brands fa-sass" style="color: #fff"></i></div></div></div><div class="recommend-tags-line"><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #2c51db"><i class="fa-brands fa-css3-alt" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #563e7c"><i class="fa-brands fa-bootstrap" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #42b883"><i class="fa-brands fa-vuejs" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #37322e"><i class="fa-brands fa-node" style="color: #7dbd05"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #2c51db"><i class="fa-brands fa-css3-alt" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #563e7c"><i class="fa-brands fa-bootstrap" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #42b883"><i class="fa-brands fa-vuejs" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #37322e"><i class="fa-brands fa-node" style="color: #7dbd05"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #2c51db"><i class="fa-brands fa-css3-alt" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #563e7c"><i class="fa-brands fa-bootstrap" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #42b883"><i class="fa-brands fa-vuejs" style="color: #fff"></i></div></div><div class="recommend-tags-column"><div class="recommend-tags-icon" style="background: #37322e"><i class="fa-brands fa-node" style="color: #7dbd05"></i></div></div></div></div></div><a id="recommend-banner-hover" onclick="recommend.toRandomPost()"><span class="recommend-banner-text">随便逛逛</span><i class="fas fa-arrow-right recommend-banner-righticon"></i></a></div><div id="recommend-category"><div class="recommend-categoryItem"><a class="recommend-categoryItem-button" onclick="recommend.toPost(&quot;categories/tuixiangzi&quot;)"><div class="recommend-categoryItem-bg" style="background: linear-gradient(to right, #358bff, #15c6ff)"></div><span class="recommend-categoryItem-text">轻松一下</span><i class="fa-solid fa-star"></i></a></div><div class="recommend-categoryItem"><a class="recommend-categoryItem-button" onclick="recommend.toPost(&quot;categories/热门&quot;)"><div class="recommend-categoryItem-bg" style="background: linear-gradient(to right, #f65, #ffbf37)"></div><span class="recommend-categoryItem-text">热门文章</span><i class="fa-solid fa-fire"></i></a></div><div class="recommend-categoryItem"><a class="recommend-categoryItem-button" onclick="recommend.toPost(&quot;categories/资源&quot;)"><div class="recommend-categoryItem-bg" style="background: linear-gradient(to right, #18e7ae, #1eebeb)"></div><span class="recommend-categoryItem-text">优质资源</span><i class="fa-solid fa-gem"></i></a></div></div></div><div class="recommend-wrapper" id="recommend-post"><div class="recommend-post-main" id="recommend-post-main"><div class="recommend-post-cover" onclick="recommend.toPost(&quot;2023/11/20/butterfly-recommend使用说明&quot;)" style="background: var(--recommend-main) url(/img/sheniandaji.png) no-repeat center/cover"></div><div class="recommend-post-cover-wrapper"><div class="recommend-post-cover-info" onclick="recommend.toPost(&quot;2023/11/20/butterfly-recommend使用说明&quot;)"><div class="recommend-post-cover-subTitle">新年新气象</div><div class="recommend-post-cover-title">蛇年到，福气绕，愿吉祥好运永相伴</div></div><div class="recommend-post-cover-more" onclick="window.event.cancelBubble=true;recommend.hideCover();"><div class="recommend-post-cover-more-bg"></div><i class="fa-solid fa-circle-plus"></i><span>更多推荐</span></div></div></div><div class="recommend-post-list" onmouseleave="window.event.cancelBubble=true;recommend.showCover();"><div class="recommend-post-item recommend-post-item-text"><div class="recommend-post-item-cover" onclick="recommend.toPost(&quot;post/bc9a4dc7.html&quot;)" style="background: var(--recommend-main) url(/img/deepseek.png) no-repeat center/cover"><img src="/img/deepseek.png" onerror="this.onerror=null,this.src=&quot;/img/404.png&quot;" title="deepseek"/><div class="recommend-post-item-text-wrapper" style="background: radial-gradient(at 10% 10%, rgba(254, 38, 33,.8), rgba(255, 187, 106, .8))"></div></div><div class="recommend-post-item-title" onclick="recommend.toPost(&quot;post/bc9a4dc7.html&quot;)" title="蛇年到，福气绕，愿吉祥好运永相伴" style="color: #ffbb6a">蛇年到，福气绕，愿吉祥好运永相伴</div></div><div class="recommend-post-item recommend-post-item-text"><div class="recommend-post-item-cover" onclick="recommend.toPost(&quot;post/408ec80b.html&quot;)" style="background: var(--recommend-main) url(/img/ruoyi-manage.png) no-repeat center/cover"><img src="/img/ruoyi-manage.png" onerror="this.onerror=null,this.src=&quot;/img/404.png&quot;" title="维护若依项目"/><div class="recommend-post-item-text-wrapper" style="background: radial-gradient(at 10% 10%, rgba(254, 38, 33,.8), rgba(255, 187, 106, .8))"></div></div><div class="recommend-post-item-title" onclick="recommend.toPost(&quot;post/408ec80b.html&quot;)" title="undefined" style="color: #ffbb6a">undefined</div></div><div class="recommend-post-item recommend-post-item-text"><div class="recommend-post-item-cover" onclick="recommend.toPost(&quot;post/fac5c62e.html&quot;)" style="background: var(--recommend-main) url(/img/lock.png) no-repeat center/cover"><img src="/img/lock.png" onerror="this.onerror=null,this.src=&quot;/img/404.png&quot;" title="如何其他电脑上继续编写博客"/><div class="recommend-post-item-text-wrapper" style="background: radial-gradient(at 10% 10%, rgba(254, 38, 33,.8), rgba(255, 187, 106, .8))"></div></div><div class="recommend-post-item-title" onclick="recommend.toPost(&quot;post/fac5c62e.html&quot;)" title="undefined" style="color: #ffbb6a">undefined</div></div><div class="recommend-post-item recommend-post-item-text"><div class="recommend-post-item-cover" onclick="recommend.toPost(&quot;post/d2d9ea24.html&quot;)" style="background: var(--recommend-main) url(/img/es.png) no-repeat center/cover"><img src="/img/es.png" onerror="this.onerror=null,this.src=&quot;/img/404.png&quot;" title="Elasticsearch学习"/><div class="recommend-post-item-text-wrapper" style="background: radial-gradient(at 10% 10%, rgba(254, 38, 33,.8), rgba(255, 187, 106, .8))"></div></div><div class="recommend-post-item-title" onclick="recommend.toPost(&quot;post/d2d9ea24.html&quot;)" title="undefined" style="color: #ffbb6a">undefined</div></div><div class="recommend-post-item recommend-post-item-text"><div class="recommend-post-item-cover" onclick="recommend.toPost(&quot;post/b4780c00.html&quot;)" style="background: var(--recommend-main) url(/img/ruoyi.png) no-repeat center/cover"><img src="/img/ruoyi.png" onerror="this.onerror=null,this.src=&quot;/img/404.png&quot;" title="若依项目的首次部署"/><div class="recommend-post-item-text-wrapper" style="background: radial-gradient(at 10% 10%, rgba(254, 38, 33,.8), rgba(255, 187, 106, .8))"></div></div><div class="recommend-post-item-title" onclick="recommend.toPost(&quot;post/b4780c00.html&quot;)" title="undefined" style="color: #ffbb6a">undefined</div></div><div class="recommend-post-item recommend-post-item-text"><div class="recommend-post-item-cover" onclick="recommend.toPost(&quot;post/17bde61f.html&quot;)" style="background: var(--recommend-main) url(/img/s3.png) no-repeat center/cover"><img src="/img/s3.png" onerror="this.onerror=null,this.src=&quot;/img/404.png&quot;" title="upload"/><div class="recommend-post-item-text-wrapper" style="background: radial-gradient(at 10% 10%, rgba(254, 38, 33,.8), rgba(255, 187, 106, .8))"></div></div><div class="recommend-post-item-title" onclick="recommend.toPost(&quot;post/17bde61f.html&quot;)" title="undefined" style="color: #ffbb6a">undefined</div></div></div></div></div></div>';
+              parent_div_git.insertAdjacentHTML("afterbegin",item_html);
+            },
+            toRandomPost: function() {
+              var posts_path = "post/408ec80b.html,post/17bde61f.html,post/408ec80b.html,post/bc9a4dc7.html,post/db544ad0.html,post/fac5c62e.html,post/d2d9ea24.html,post/f5d1a12e.html,post/97c26f6a.html,post/b4780c00.html".split(',');
+              var randomPost = posts_path[Math.floor(Math.random() * posts_path.length)];
+              window.recommend.toPost(randomPost);
+            },
+            toPost: function(href) {
+              if (typeof pjax !== 'undefined') pjax.loadUrl('/' + href);
+              else window.location.href = window.location.origin + (href.charAt(0) === '/' ? '' : '/') + href;
+            },
+            hideCover: function() {
+              const $main = document.querySelector("#recommend-post-main");
+              $main.className = 'recommend-post-main recommend-hide';
+            },
+            showCover: function() {
+              const $main = document.querySelector("#recommend-post-main");
+              if ($main) $main.className = 'recommend-post-main';
+            },
+            postScroll: function(dom) {
+              const e = window.event || arguments.callee.caller.arguments[0];
+              if (document.body.clientWidth <= 1200) {
+                let o = -e.wheelDelta / 2;
+                dom.scrollLeft += o;
+                e.preventDefault();
+              }
+            }
+          }
+          console.log(
+            "%c plugin ⭐ hexo_butterfly_recommend ⭐ https://github.com/weizwz/hexo-butterfly-recommend ",
+            "color: #fff; padding:3px; font-size:12px; background: linear-gradient(90deg, #358bff, #1eebeb);"
+          )
+        }
+        window.recommend.hexo_butterfly_recommend_init();
+      </script><script data-pjax="">
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'e3296aacb5514e74a3cfb6ac9539d1a1';
+  var gaud_map_key = 'edfaca7c5f2086f329fadac0669a0324';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '120.06566,30.36089';
+  var clock_default_rectangle_enable = 'true';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax="" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.js"></script><script data-pjax="">
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/17bde61f.html" alt=""><img width="48" height="48" src="/img/s3.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-03-07</span><a class="blog-slider__title" href="post/17bde61f.html" alt="">upload</a><div class="blog-slider__text">实现s3分片上传与下载文件</div><a class="blog-slider__button" href="post/17bde61f.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/bc9a4dc7.html" alt=""><img width="48" height="48" src="/img/deepseek.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-02-10</span><a class="blog-slider__title" href="post/bc9a4dc7.html" alt="">deepseek</a><div class="blog-slider__text">centos服务器本地部署deepseek</div><a class="blog-slider__button" href="post/bc9a4dc7.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/408ec80b.html" alt=""><img width="48" height="48" src="/img/docker.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-03-06</span><a class="blog-slider__title" href="post/408ec80b.html" alt="">OOM情况的处理</a><div class="blog-slider__text">对服务器容器内存溢出的处理</div><a class="blog-slider__button" href="post/408ec80b.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/db544ad0.html" alt=""><img width="48" height="48" src="/img/nextcloud.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-18</span><a class="blog-slider__title" href="post/db544ad0.html" alt="">安装nextcloud</a><div class="blog-slider__text">服务器安装nextcloud的步骤</div><a class="blog-slider__button" href="post/db544ad0.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/f5d1a12e.html" alt=""><img width="48" height="48" src="/img/stream.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-06</span><a class="blog-slider__title" href="post/f5d1a12e.html" alt="">java中stream的使用</a><div class="blog-slider__text">介绍java8的stream的使用</div><a class="blog-slider__button" href="post/f5d1a12e.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/97c26f6a.html" alt=""><img width="48" height="48" src="/img/concurrent.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-05</span><a class="blog-slider__title" href="post/97c26f6a.html" alt="">并发的处理</a><div class="blog-slider__text">java对高并发的处理</div><a class="blog-slider__button" href="post/97c26f6a.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/b4780c00.html" alt=""><img width="48" height="48" src="/img/ruoyi.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-04</span><a class="blog-slider__title" href="post/b4780c00.html" alt="">若依项目的首次部署</a><div class="blog-slider__text">首次部署ruoyi框架的步骤</div><a class="blog-slider__button" href="post/b4780c00.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/408ec80b.html" alt=""><img width="48" height="48" src="/img/ruoyi-manage.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-10</span><a class="blog-slider__title" href="post/408ec80b.html" alt="">维护若依项目</a><div class="blog-slider__text">对线上若依框架的维护</div><a class="blog-slider__button" href="post/408ec80b.html" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer="" src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer="" data-pjax="" src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '500ms');
+    arr[i].setAttribute('data-wow-delay', '300ms');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer="" src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer="" src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax="" src="https://unpkg.com/oh-my-live2d"></script><script>const oml2d = OML2D.loadOml2d({dockedPosition:"left",mobileDisplay:true,models:[{"path":"https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json","mobilePosition":[30,23],"mobileScale":0.1,"mobileStageStyle":{"width":180,"height":166},"motionPreloadStrategy":"IDLE","position":[30,35],"scale":0.15,"stageStyle":{"width":250,"height":250}},{"path":"https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json","scale":0.12,"position":[0,0],"stageStyle":{"width":250},"mobileScale":0.08,"mobilePosition":[0,0],"mobileStageStyle":{"width":180}},{"path":"https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json","scale":0.12,"position":[0,0],"mobileScale":0.08,"mobilePosition":[0,0],"mobileStageStyle":{"width":180},"stageStyle":{"width":250}}],parentElement:document.body,primaryColor:"var(--btn-bg)",sayHello:false,tips:{style: {"width":230,"height":120,"left":"calc(50% + 5px)","top":"-115px"},mobileStyle: {"width":180,"height":80,"left":"calc(50% + 5px)","top":"-100px"},idleTips:{interval:15000,message:function(){
+  return axios.get('https://v1.hitokoto.cn?c=i')
+    .then(function (response) {
+      return response.data.hitokoto ;
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+}
+,wordTheDay:function(wordTheDayData){
+  return `${wordTheDayData.hitokoto}    by.${wordTheDayData.from}`;
+}
+}}});</script><!-- hexo injector body_end end -->
+    <link rel="stylesheet" href="https://ai.tianli0.top/static/public/postChatUser_summary.min.css">
+    <script>
+        let tianliGPT_key = 'cb68ca2a60e7baca40b04b5c0539e43122f59da5';
+        let tianliGPT_postSelector = '#postchat_postcontent';
+        let tianliGPT_Title = '文章摘要';
+        let tianliGPT_postURL = '/^https?://[^/]+/[0-9]{4}/[0-9]{2}/[0-9]{2}/';
+        let tianliGPT_blacklist = '';
+        let tianliGPT_wordLimit = '1000';
+        let tianliGPT_typingAnimate = true;
+        let tianliGPT_theme = 'default';
+        var postChatConfig = {
+          backgroundColor: "#3e86f6",
+          bottom: "80px",
+          left: "520px",
+          fill: "#FFFFFF",
+          width: "44px",
+          frameWidth: "375px",
+          frameHeight: "600px",
+          defaultInput: true,
+          upLoadWeb: true,
+          showInviteLink: true,
+          userTitle: "PostChat",
+          userDesc: "如果你对网站的内容有任何疑问，可以来问我哦～",
+          addButton: true,
+          beginningText: "这篇文章介绍了",
+          userIcon: "https://ai.tianli0.top/static/img/PostChat.webp",
+          userMode: "magic",
+          defaultChatQuestions: ["你好","你是谁"],
+          defaultSearchQuestions: ["视频压缩","设计"]
+        };
+    </script>
+    <script data-postchat_key="cb68ca2a60e7baca40b04b5c0539e43122f59da5" src="https://ai.tianli0.top/static/public/postChatUser_summary.min.js"></script>
+  </body></html>

@@ -1,0 +1,83 @@
+/* 父容器样式 */
+.recent-post-items {
+    display: flex; /* 弹性布局 */
+    flex-wrap: wrap; /* 允许子元素换行 */
+    gap: 1rem; /* 子元素之间的间距 */
+    justify-content: space-between; /* 子元素对齐 */
+    padding: 1rem 0; /* 容器的内边距 */
+    box-sizing: border-box;
+}
+
+/* 默认双排布局 */
+.recent-post-items > .recent-post-item {
+    flex: 0 0 calc(50% - 1rem); /* 每行两列 */
+    display: flex;
+    flex-direction: column; /* 垂直排列，图片在上文字在下 */
+    background: #f9f9f9; /* 卡片背景色 */
+    border-radius: 8px; /* 圆角 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    overflow: hidden; /* 防止内容溢出 */
+    box-sizing: border-box; /* 确保宽度计算正确 */
+    padding: 0;
+}
+
+/* 图片容器样式 */
+.recent-post-items > .recent-post-item .post_cover {
+    width: 100%; /* 图片宽度 */
+    height: 200px; /* 固定图片高度 */
+    overflow: hidden; /* 隐藏多余图片部分 */
+    border-radius: 8px 8px 0 0; /* 图片顶部圆角 */
+}
+
+.recent-post-items > .recent-post-item .post_cover img {
+    width: 100%; /* 图片宽度 */
+    height: 100%; /* 图片高度 */
+    object-fit: cover; /* 确保图片比例裁剪 */
+    display: block; /* 消除 inline 元素空隙 */
+}
+
+/* 文字内容容器样式 */
+.recent-post-items > .recent-post-item .recent-post-info {
+    padding: 1rem; /* 内容内边距 */
+    flex: 1; /* 填充剩余空间 */
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    justify-content: space-between;
+    text-align: center; /* 文本居中对齐 */
+}
+
+/* 标题样式 */
+.recent-post-items > .recent-post-item .recent-post-info .article-title {
+    font-size: 1.2rem; /* 标题字体大小 */
+    font-weight: bold; /* 加粗 */
+    margin-bottom: 0.5rem; /* 标题与其他内容间距 */
+    text-decoration: none; /* 移除下划线 */
+    color: #333; /* 标题字体颜色 */
+}
+
+/* Meta 信息样式 */
+.recent-post-items > .recent-post-item .recent-post-info .article-meta-wrap {
+    font-size: 0.9rem; /* 字体大小 */
+    color: #666; /* 字体颜色 */
+    margin-bottom: 0.5rem; /* Meta 与内容间距 */
+}
+
+/* 正文内容样式 */
+.recent-post-items > .recent-post-item .recent-post-info .content {
+    font-size: 1rem; /* 正文字体大小 */
+    line-height: 1.5; /* 行高 */
+    color: #555; /* 内容字体颜色 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 限制显示三行 */
+    -webkit-box-orient: vertical;
+}
+
+/* 响应式调整 - 单列布局（小屏） */
+@media screen and (max-width: 768px) {
+    .recent-post-items > .recent-post-item {
+        flex: 0 0 100%; /* 单列显示 */
+    }
+}
+
