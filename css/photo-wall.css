@@ -1,0 +1,59 @@
+/* 整体容器 */
+.photo-wall-container {
+    padding: 0;
+    text-align: center;
+}
+
+/* 使用 CSS 列创建瀑布流布局 */
+.photo-wall-list {
+    column-count: 4;        /* 可根据页面宽度调整列数 */
+    column-gap: 0;          /* 列间距设为0，由元素自身间距提供间隙 */
+    font-size: 0;           /* 清除 inline-block 元素间的空白 */
+}
+
+/* 每个图片容器（a元素）：设置1px的外边距，并避免在列中断裂 */
+.photo-wall-list a {
+    display: inline-block;
+    margin: 1px;            /* 上下左右各1px间距 */
+    width: calc(100% - 2px);  /* 宽度扣除左右间距 */
+    break-inside: avoid;
+}
+
+/* 图片/视频样式：保持纵横比，自适应容器，去掉圆角 */
+.photo-item {
+    display: block;         /* 避免内联产生空隙 */
+    width: 100%;
+    height: auto;
+    border-radius: 0;       /* 去掉圆角 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+    object-fit: cover;      /* 填充容器 */
+}
+
+.photo-item:hover {
+    transform: scale(2.7);
+    position: relative;
+    z-index: 999999;
+}
+
+/* 视频兼容处理 */
+video.photo-item {
+    display: block;
+}
+
+/* 响应式调整：根据屏幕宽度调整列数 */
+@media (max-width: 1200px) {
+    .photo-wall-list {
+        column-count: 3;
+    }
+}
+@media (max-width: 900px) {
+    .photo-wall-list {
+        column-count: 2;
+    }
+}
+@media (max-width: 600px) {
+    .photo-wall-list {
+        column-count: 1;
+    }
+}

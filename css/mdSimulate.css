@@ -1,0 +1,131 @@
+/* 1. 基本排版样式 */
+.markdown-body {
+    font-family: "Arial", sans-serif;   /* 设置字体 */
+    line-height: 1.6;                   /* 设置行高 */
+    color: #333;                        /* 设置字体颜色 */
+    margin: 20px;                       /* 给整个区域加点边距 */
+    padding: 10px;                      /* 内边距 */
+}
+
+/* 2. 标题样式 */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+    font-weight: bold;
+    color: #333;
+}
+
+.markdown-body h1 {
+    font-size: 2em; /* 一级标题大小 */
+    margin-bottom: 0.5em;
+}
+
+.markdown-body h2 {
+    font-size: 1.75em; /* 二级标题大小 */
+    margin-bottom: 0.5em;
+}
+
+.markdown-body h3 {
+    font-size: 1.5em;  /* 三级标题大小 */
+    margin-bottom: 0.5em;
+}
+
+/* 3. 段落样式 */
+.markdown-body p {
+    margin-bottom: 1em;
+    font-size: 1rem;    /* 默认文本大小 */
+    line-height: 1.8;   /* 行高 */
+}
+
+/* 4. 列表样式 */
+.markdown-body ul,
+.markdown-body ol {
+    margin-left: 20px;
+}
+
+.markdown-body ul {
+    list-style-type: disc;
+}
+
+.markdown-body ol {
+    list-style-type: decimal;
+}
+
+.markdown-body li {
+    margin-bottom: 0.5em;
+}
+
+/* 5. 强调和加粗 */
+.markdown-body strong {
+    font-weight: bold;
+    color: #000;
+}
+
+.markdown-body em {
+    font-style: italic;
+}
+
+/* 6. 链接样式 */
+.markdown-body a {
+    color: #1a73e8;      /* 链接颜色 */
+    text-decoration: none; /* 去掉下划线 */
+}
+
+.markdown-body a:hover {
+    text-decoration: underline; /* 悬停时加下划线 */
+}
+
+/* 7. 图片样式 */
+.markdown-body img {
+    max-width: 100%;  /* 确保图片不会超出容器 */
+    height: auto;
+    display: block;
+    margin: 10px 0;
+}
+
+/* 8. 代码块样式 */
+.markdown-body pre {
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    padding: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: auto;
+    word-wrap: normal;
+}
+
+.markdown-body code {
+    background-color: #f4f4f4;
+    padding: 2px 4px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* 9. 块引用样式 */
+.markdown-body blockquote {
+    border-left: 4px solid #ddd;
+    padding-left: 15px;
+    color: #555;
+    margin: 10px 0;
+}
+
+/* 10. 表格样式 */
+.markdown-body table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.markdown-body table, .markdown-body th, .markdown-body td {
+    border: 1px solid #ddd;
+}
+
+.markdown-body th, .markdown-body td {
+    padding: 8px;
+    text-align: left;
+}
+
+.markdown-body th {
+    background-color: #f4f4f4;
+}
