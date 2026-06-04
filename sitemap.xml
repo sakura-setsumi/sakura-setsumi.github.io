@@ -2,15 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://github.fengsy.online/google6c9cf60320ff3937.html</loc>
-    
-    <lastmod>2026-06-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://github.fengsy.online/categories/narcissu.html</loc>
     
     <lastmod>2026-06-02</lastmod>
@@ -29,25 +20,7 @@
   </url>
   
   <url>
-    <loc>https://github.fengsy.online/tags/index.html</loc>
-    
-    <lastmod>2026-06-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://github.fengsy.online/vps/tab1.html</loc>
-    
-    <lastmod>2026-06-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://github.fengsy.online/vps/tab3.html</loc>
     
     <lastmod>2026-06-01</lastmod>
     
@@ -65,7 +38,16 @@
   </url>
   
   <url>
-    <loc>https://github.fengsy.online/categories/vps.html</loc>
+    <loc>https://github.fengsy.online/vps/tab3.html</loc>
+    
+    <lastmod>2026-06-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.fengsy.online/tags/index.html</loc>
     
     <lastmod>2026-06-01</lastmod>
     
@@ -83,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://github.fengsy.online/links/index.html</loc>
+    <loc>https://github.fengsy.online/categories/vps.html</loc>
     
     <lastmod>2026-06-01</lastmod>
     
@@ -93,6 +75,15 @@
   
   <url>
     <loc>https://github.fengsy.online/photo-wall/index.html</loc>
+    
+    <lastmod>2026-06-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.fengsy.online/links/index.html</loc>
     
     <lastmod>2026-06-01</lastmod>
     
@@ -128,6 +119,15 @@
   </url>
   
   <url>
+    <loc>https://github.fengsy.online/bilibili/config.json</loc>
+    
+    <lastmod>2026-06-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://github.fengsy.online/about/index.html</loc>
     
     <lastmod>2026-06-01</lastmod>
@@ -138,15 +138,6 @@
   
   <url>
     <loc>https://github.fengsy.online/bangumis/index.html</loc>
-    
-    <lastmod>2026-06-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://github.fengsy.online/bilibili/config.json</loc>
     
     <lastmod>2026-06-01</lastmod>
     
@@ -302,13 +293,6 @@
   </url>
   
   <url>
-    <loc>https://github.fengsy.online/tags/elasticsearch/</loc>
-    <lastmod>2026-06-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://github.fengsy.online/tags/deepseek/</loc>
     <lastmod>2026-06-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -317,6 +301,13 @@
   
   <url>
     <loc>https://github.fengsy.online/tags/hexo/</loc>
+    <lastmod>2026-06-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://github.fengsy.online/tags/elasticsearch/</loc>
     <lastmod>2026-06-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
