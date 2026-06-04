@@ -3,11 +3,11 @@
   <title>竹兰小筑</title>
   
   
-  <link href="https://blog1.fengsy.top/atom.xml" rel="self"/>
+  <link href="https://github.fengsy.online/atom.xml" rel="self"/>
   
-  <link href="https://blog1.fengsy.top/"/>
+  <link href="https://github.fengsy.online/"/>
   <updated>2026-06-01T11:33:46.188Z</updated>
-  <id>https://blog1.fengsy.top/</id>
+  <id>https://github.fengsy.online/</id>
   
   <author>
     <name>南枝向暖</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>vpn</title>
-    <link href="https://blog1.fengsy.top/post/2a08f859.html"/>
-    <id>https://blog1.fengsy.top/post/2a08f859.html</id>
+    <link href="https://github.fengsy.online/post/2a08f859.html"/>
+    <id>https://github.fengsy.online/post/2a08f859.html</id>
     <published>2025-03-19T06:46:36.000Z</published>
     <updated>2026-06-01T11:33:46.188Z</updated>
     
@@ -33,19 +33,19 @@
     
     
     
-    <category term="centos,vps" scheme="https://blog1.fengsy.top/categories/centos-vps/"/>
+    <category term="centos,vps" scheme="https://github.fengsy.online/categories/centos-vps/"/>
     
     
-    <category term="centos" scheme="https://blog1.fengsy.top/tags/centos/"/>
+    <category term="centos" scheme="https://github.fengsy.online/tags/centos/"/>
     
-    <category term="vps" scheme="https://blog1.fengsy.top/tags/vps/"/>
+    <category term="vps" scheme="https://github.fengsy.online/tags/vps/"/>
     
   </entry>
   
   <entry>
     <title>upload</title>
-    <link href="https://blog1.fengsy.top/post/17bde61f.html"/>
-    <id>https://blog1.fengsy.top/post/17bde61f.html</id>
+    <link href="https://github.fengsy.online/post/17bde61f.html"/>
+    <id>https://github.fengsy.online/post/17bde61f.html</id>
     <published>2025-03-07T08:01:58.000Z</published>
     <updated>2026-06-01T11:33:46.188Z</updated>
     
@@ -56,19 +56,19 @@
     
     
     
-    <category term="java,steam" scheme="https://blog1.fengsy.top/categories/java-steam/"/>
+    <category term="java,steam" scheme="https://github.fengsy.online/categories/java-steam/"/>
     
     
-    <category term="java" scheme="https://blog1.fengsy.top/tags/java/"/>
+    <category term="java" scheme="https://github.fengsy.online/tags/java/"/>
     
-    <category term="steam" scheme="https://blog1.fengsy.top/tags/steam/"/>
+    <category term="steam" scheme="https://github.fengsy.online/tags/steam/"/>
     
   </entry>
   
   <entry>
     <title>OOM情况的处理</title>
-    <link href="https://blog1.fengsy.top/post/408ec80b.html"/>
-    <id>https://blog1.fengsy.top/post/408ec80b.html</id>
+    <link href="https://github.fengsy.online/post/408ec80b.html"/>
+    <id>https://github.fengsy.online/post/408ec80b.html</id>
     <published>2025-03-06T01:24:47.000Z</published>
     <updated>2026-06-01T11:33:46.186Z</updated>
     
@@ -79,17 +79,17 @@
     
     
     
-    <category term="部署" scheme="https://blog1.fengsy.top/categories/%E9%83%A8%E7%BD%B2/"/>
+    <category term="部署" scheme="https://github.fengsy.online/categories/%E9%83%A8%E7%BD%B2/"/>
     
     
-    <category term="部署" scheme="https://blog1.fengsy.top/tags/%E9%83%A8%E7%BD%B2/"/>
+    <category term="部署" scheme="https://github.fengsy.online/tags/%E9%83%A8%E7%BD%B2/"/>
     
   </entry>
   
   <entry>
     <title>deepseek</title>
-    <link href="https://blog1.fengsy.top/post/bc9a4dc7.html"/>
-    <id>https://blog1.fengsy.top/post/bc9a4dc7.html</id>
+    <link href="https://github.fengsy.online/post/bc9a4dc7.html"/>
+    <id>https://github.fengsy.online/post/bc9a4dc7.html</id>
     <published>2025-02-10T07:54:33.000Z</published>
     <updated>2026-06-01T11:33:46.187Z</updated>
     
@@ -100,17 +100,17 @@
     
     
     
-    <category term="java并发" scheme="https://blog1.fengsy.top/categories/java%E5%B9%B6%E5%8F%91/"/>
+    <category term="java并发" scheme="https://github.fengsy.online/categories/java%E5%B9%B6%E5%8F%91/"/>
     
     
-    <category term="deepseek" scheme="https://blog1.fengsy.top/tags/deepseek/"/>
+    <category term="deepseek" scheme="https://github.fengsy.online/tags/deepseek/"/>
     
   </entry>
   
   <entry>
     <title>安装nextcloud</title>
-    <link href="https://blog1.fengsy.top/post/db544ad0.html"/>
-    <id>https://blog1.fengsy.top/post/db544ad0.html</id>
+    <link href="https://github.fengsy.online/post/db544ad0.html"/>
+    <id>https://github.fengsy.online/post/db544ad0.html</id>
     <published>2024-12-18T06:48:54.000Z</published>
     <updated>2026-06-01T11:33:46.188Z</updated>
     
@@ -121,17 +121,17 @@
     
     
     
-    <category term="部署" scheme="https://blog1.fengsy.top/categories/%E9%83%A8%E7%BD%B2/"/>
+    <category term="部署" scheme="https://github.fengsy.online/categories/%E9%83%A8%E7%BD%B2/"/>
     
     
-    <category term="部署" scheme="https://blog1.fengsy.top/tags/%E9%83%A8%E7%BD%B2/"/>
+    <category term="部署" scheme="https://github.fengsy.online/tags/%E9%83%A8%E7%BD%B2/"/>
     
   </entry>
   
   <entry>
     <title>如何其他电脑上继续编写博客</title>
-    <link href="https://blog1.fengsy.top/post/fac5c62e.html"/>
-    <id>https://blog1.fengsy.top/post/fac5c62e.html</id>
+    <link href="https://github.fengsy.online/post/fac5c62e.html"/>
+    <id>https://github.fengsy.online/post/fac5c62e.html</id>
     <published>2024-12-13T03:01:56.000Z</published>
     <updated>2026-06-01T11:33:46.187Z</updated>
     
@@ -142,17 +142,17 @@
     
     
     
-    <category term="hexo" scheme="https://blog1.fengsy.top/categories/hexo/"/>
+    <category term="hexo" scheme="https://github.fengsy.online/categories/hexo/"/>
     
     
-    <category term="hexo" scheme="https://blog1.fengsy.top/tags/hexo/"/>
+    <category term="hexo" scheme="https://github.fengsy.online/tags/hexo/"/>
     
   </entry>
   
   <entry>
     <title>Elasticsearch学习</title>
-    <link href="https://blog1.fengsy.top/post/d2d9ea24.html"/>
-    <id>https://blog1.fengsy.top/post/d2d9ea24.html</id>
+    <link href="https://github.fengsy.online/post/d2d9ea24.html"/>
+    <id>https://github.fengsy.online/post/d2d9ea24.html</id>
     <published>2024-12-10T09:56:21.000Z</published>
     <updated>2026-06-01T11:33:46.187Z</updated>
     
@@ -163,17 +163,17 @@
     
     
     
-    <category term="部署" scheme="https://blog1.fengsy.top/categories/%E9%83%A8%E7%BD%B2/"/>
+    <category term="部署" scheme="https://github.fengsy.online/categories/%E9%83%A8%E7%BD%B2/"/>
     
     
-    <category term="elasticsearch" scheme="https://blog1.fengsy.top/tags/elasticsearch/"/>
+    <category term="elasticsearch" scheme="https://github.fengsy.online/tags/elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>维护若依项目</title>
-    <link href="https://blog1.fengsy.top/post/408ec80b.html"/>
-    <id>https://blog1.fengsy.top/post/408ec80b.html</id>
+    <link href="https://github.fengsy.online/post/408ec80b.html"/>
+    <id>https://github.fengsy.online/post/408ec80b.html</id>
     <published>2024-12-10T07:04:47.000Z</published>
     <updated>2026-06-01T11:33:46.187Z</updated>
     
@@ -184,17 +184,17 @@
     
     
     
-    <category term="部署" scheme="https://blog1.fengsy.top/categories/%E9%83%A8%E7%BD%B2/"/>
+    <category term="部署" scheme="https://github.fengsy.online/categories/%E9%83%A8%E7%BD%B2/"/>
     
     
-    <category term="部署" scheme="https://blog1.fengsy.top/tags/%E9%83%A8%E7%BD%B2/"/>
+    <category term="部署" scheme="https://github.fengsy.online/tags/%E9%83%A8%E7%BD%B2/"/>
     
   </entry>
   
   <entry>
     <title>java中stream的使用</title>
-    <link href="https://blog1.fengsy.top/post/f5d1a12e.html"/>
-    <id>https://blog1.fengsy.top/post/f5d1a12e.html</id>
+    <link href="https://github.fengsy.online/post/f5d1a12e.html"/>
+    <id>https://github.fengsy.online/post/f5d1a12e.html</id>
     <published>2024-12-06T07:08:21.000Z</published>
     <updated>2026-06-01T11:33:46.188Z</updated>
     
@@ -205,19 +205,19 @@
     
     
     
-    <category term="java,steam" scheme="https://blog1.fengsy.top/categories/java-steam/"/>
+    <category term="java,steam" scheme="https://github.fengsy.online/categories/java-steam/"/>
     
     
-    <category term="java" scheme="https://blog1.fengsy.top/tags/java/"/>
+    <category term="java" scheme="https://github.fengsy.online/tags/java/"/>
     
-    <category term="steam" scheme="https://blog1.fengsy.top/tags/steam/"/>
+    <category term="steam" scheme="https://github.fengsy.online/tags/steam/"/>
     
   </entry>
   
   <entry>
     <title>并发的处理</title>
-    <link href="https://blog1.fengsy.top/post/97c26f6a.html"/>
-    <id>https://blog1.fengsy.top/post/97c26f6a.html</id>
+    <link href="https://github.fengsy.online/post/97c26f6a.html"/>
+    <id>https://github.fengsy.online/post/97c26f6a.html</id>
     <published>2024-12-05T02:02:11.000Z</published>
     <updated>2026-06-01T11:33:46.187Z</updated>
     
@@ -228,19 +228,19 @@
     
     
     
-    <category term="java并发" scheme="https://blog1.fengsy.top/categories/java%E5%B9%B6%E5%8F%91/"/>
+    <category term="java并发" scheme="https://github.fengsy.online/categories/java%E5%B9%B6%E5%8F%91/"/>
     
     
-    <category term="java" scheme="https://blog1.fengsy.top/tags/java/"/>
+    <category term="java" scheme="https://github.fengsy.online/tags/java/"/>
     
-    <category term="并发" scheme="https://blog1.fengsy.top/tags/%E5%B9%B6%E5%8F%91/"/>
+    <category term="并发" scheme="https://github.fengsy.online/tags/%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>若依项目的首次部署</title>
-    <link href="https://blog1.fengsy.top/post/b4780c00.html"/>
-    <id>https://blog1.fengsy.top/post/b4780c00.html</id>
+    <link href="https://github.fengsy.online/post/b4780c00.html"/>
+    <id>https://github.fengsy.online/post/b4780c00.html</id>
     <published>2024-12-04T02:02:00.000Z</published>
     <updated>2026-06-01T11:33:46.188Z</updated>
     
@@ -251,10 +251,10 @@
     
     
     
-    <category term="部署" scheme="https://blog1.fengsy.top/categories/%E9%83%A8%E7%BD%B2/"/>
+    <category term="部署" scheme="https://github.fengsy.online/categories/%E9%83%A8%E7%BD%B2/"/>
     
     
-    <category term="部署" scheme="https://blog1.fengsy.top/tags/%E9%83%A8%E7%BD%B2/"/>
+    <category term="部署" scheme="https://github.fengsy.online/tags/%E9%83%A8%E7%BD%B2/"/>
     
   </entry>
   
