@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://github.fengsy.online/comments/index.html</loc>
+    <loc>https://github.fengsy.online/links/index.html</loc>
     
     <lastmod>2026-06-01</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://github.fengsy.online/links/index.html</loc>
+    <loc>https://github.fengsy.online/comments/index.html</loc>
     
     <lastmod>2026-06-01</lastmod>
     
@@ -119,6 +119,15 @@
   </url>
   
   <url>
+    <loc>https://github.fengsy.online/bilibili/config.json</loc>
+    
+    <lastmod>2026-06-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://github.fengsy.online/about/index.html</loc>
     
     <lastmod>2026-06-01</lastmod>
@@ -129,15 +138,6 @@
   
   <url>
     <loc>https://github.fengsy.online/bilibili/all.json</loc>
-    
-    <lastmod>2026-06-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://github.fengsy.online/bilibili/config.json</loc>
     
     <lastmod>2026-06-01</lastmod>
     
